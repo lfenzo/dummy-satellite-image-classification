@@ -1,4 +1,4 @@
-# Simple Satellite Image Classification
+# Dummy Satellite Image Classification
 
 The objective of this project was to compare the difference between the `Adam`, `SGD` and
 `RMSprop` optimizers in a task of image classification with neural networks trained using PyTorch.
