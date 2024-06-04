@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
         train_files, valid_files, test_files = train_valid_test_split_by_percentage(
             files=files_for_current_class,
-            percents=[0.70, 0.15],
+            percs=[0.70, 0.15],
         )
 
         for (directory, files) in zip(['train', 'valid', 'test'], [train_files, valid_files, test_files]):
