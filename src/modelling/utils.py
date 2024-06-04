@@ -1,8 +1,13 @@
+import os
+from datetime import datetime
+
 import torch
 import numpy as np
 import torch.nn as nn
 from tqdm import tqdm
 from torch.utils.data import DataLoader
+
+from src.modelling.base_model import BaseImageClassifier
 
 
 def accuracy(outputs, labels):
@@ -22,8 +27,15 @@ def get_lr(optimizer):
         return param_group['lr']
 
 
+def save_model_to_directory(model, directory: str, opt_name: str) -> None:
+    model_date = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    model_file = f"resnet_{opt_name}_{model_date}.pth"
+    model = model.to(torch.device("cpu"))
+    torch.save(model.state_dict(), os.path.join(directory, model_file))
+
+
 def train_model(
-    model,
+    model: BaseImageClassifier,
     epochs: int,
     train_loader: DataLoader,
     valid_loader: DataLoader,
@@ -48,7 +60,7 @@ def train_model(
         train_losses = []
         lrs = []
 
-        for batch in tqdm(train_loader):
+        for batch in train_loader:
             loss = model.training_step(batch)
             train_losses.append(loss)
             loss.backward()
